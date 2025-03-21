@@ -1,16 +1,23 @@
-import mysql from 'mysql2';
+import DBService from '../database/DBService';
 
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'sticks',
-  database: 'library',
-});
+class BookService {
+  private dbService: DBService;
 
-db.connect((err) => {
-  if (err) {
-    console.log('Error connecting to database', err);
-    throw err;
+  constructor() {
+    this.dbService = new DBService();
   }
-  console.log('Connected to database');
-});
+
+  public async getBooks(): Promise<any[]> {
+    const query = 'SELECT * FROM books';
+    try {
+      const result = await this.dbService.runQuery(query);
+      console.log('Books retrieved successfully:', result);
+      return result;
+    } catch (error) {
+      console.error('Error retrieving books:', error);
+      throw error;
+    }
+  }
+}
+
+export { BookService };
