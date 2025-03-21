@@ -1,6 +1,6 @@
 CREATE TABLE `books` (
   `id` int NOT NULL,
-  `title` varchar(128) DEFAULT NULL,
+  `title` varchar(128) DEFAULT NOT NULL,
   `author` varchar(128) DEFAULT NULL,
   `summary` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
