@@ -1,22 +1,32 @@
+import Container from 'typedi';
 import DBService from '../database/DBService';
 
 class BookService {
   private dbService: DBService;
 
   constructor() {
-    this.dbService = new DBService();
+    this.dbService = Container.get(DBService);
   }
 
   public async getBooks(): Promise<any[]> {
     const query = 'SELECT * FROM books';
-    try {
-      const result = await this.dbService.runQuery(query);
-      console.log('Books retrieved successfully:', result);
-      return result;
-    } catch (error) {
-      console.error('Error retrieving books:', error);
-      throw error;
-    }
+    const result = await this.dbService.runQuery(query);
+    console.log('Books retrieved successfully:', result);
+    return result;
+  }
+
+  public async getBookById(id: number): Promise<any> {
+    const query = 'SELECT * FROM books WHERE id = ?';
+    const result = await this.dbService.runQuery(query, [id]);
+    console.log('Book retrieved successfully:', result);
+    return result;
+  }
+
+  public async getAuthors(): Promise<any[]> {
+    const query = 'SELECT distinct author FROM books';
+    const result = await this.dbService.runQuery(query);
+    console.log('Authors retrieved successfully:', result);
+    return result;
   }
 }
 

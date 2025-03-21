@@ -1,5 +1,7 @@
 import mysql from 'mysql2/promise';
+import { Service } from 'typedi';
 
+@Service()
 class DBService {
   private connection: mysql.Connection | undefined;
 

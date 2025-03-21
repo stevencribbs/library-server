@@ -5,7 +5,6 @@ import { BookService } from './bookService';
 function setupBookRoutes(app: Express) {
   app.get('/books', async (req, res) => {
     const bookService = new BookService(); // Create an instance of BookService
-    // Logic to get all books
     const books = await bookService.getBooks(); // Assuming this method returns a promise
     res.send(books);
   });
@@ -13,9 +12,11 @@ function setupBookRoutes(app: Express) {
   //   // Logic to create a new book
   //   res.send('Create a new book');
   // });
-  app.get('/authors', (req, res) => {
+  app.get('/authors', async (req, res) => {
     // Logic to get all authors
-    res.send('Get all authors');
+    const bookService = new BookService(); // Create an instance of BookService
+    const authors = await bookService.getAuthors(); // Assuming this method returns a promise
+    res.send(authors);
   });
 }
 
