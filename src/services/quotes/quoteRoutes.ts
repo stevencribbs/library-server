@@ -7,6 +7,12 @@ function setupQuoteRoutes(app: Express) {
     const books = await quoteService.getQuotes();
     res.send(books);
   });
+  app.post('/quotes', async (req, res) => {
+    const quoteService = new QuoteService();
+    const quote = req.body;
+    const createdQuote = await quoteService.createQuote(quote);
+    res.status(201).send(createdQuote);
+  });
   app.get('/quotes/:id', async (req, res) => {
     const quoteService = new QuoteService();
     const quoteId = parseInt(req.params.id);
