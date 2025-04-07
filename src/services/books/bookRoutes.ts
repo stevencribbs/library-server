@@ -14,10 +14,13 @@ function setupBookRoutes(app: Express) {
     const book = await bookService.getBookById(bookId);
     res.send(book);
   });
-  // app.post('/books', (req, res) => {
-  //   // Logic to create a new book
-  //   res.send('Create a new book');
-  // });
+  app.post('/books', async (req, res) => {
+    // Logic to create a new book
+    const bookService = new BookService();
+    const bookData = req.body; // Assuming the book data is sent in the request body
+    const book = await bookService.createBook(bookData);
+    res.send(book);
+  });
   app.get('/books/meta/authors', async (req, res) => {
     // Logic to get all authors
     const bookService = new BookService(); // Create an instance of BookService

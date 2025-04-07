@@ -28,6 +28,17 @@ class BookService {
     console.log('Authors retrieved successfully:', result);
     return result;
   }
+
+  public async createBook(book: any): Promise<any> {
+    if (!book || !book.title || !book.author) {
+      throw new Error('Invalid book data');
+    }
+    const summary = book.summary || '';
+    const query = 'INSERT INTO books (title, author, summary) VALUES (?, ?, ?)';
+    const result = await this.dbService.runQuery(query, [book.title, book.author, summary]);
+    console.log('Book created successfully:', { ...book, id: result.insertId });
+    return { ...book, id: result.insertId };
+  }
 }
 
 export { BookService };

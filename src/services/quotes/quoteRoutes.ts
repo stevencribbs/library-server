@@ -4,8 +4,14 @@ import { QuoteService } from './QuoteService';
 function setupQuoteRoutes(app: Express) {
   app.get('/quotes', async (req, res) => {
     const quoteService = new QuoteService();
-    const books = await quoteService.getQuotes();
-    res.send(books);
+    const quotes = await quoteService.getQuotes();
+    res.send(quotes);
+  });
+  app.post('/quotes', async (req, res) => {
+    const quoteService = new QuoteService();
+    const quote = req.body;
+    const createdQuote = await quoteService.createQuote(quote);
+    res.status(201).send(createdQuote);
   });
   app.get('/quotes/:id', async (req, res) => {
     const quoteService = new QuoteService();
